@@ -8,6 +8,7 @@ const connectDB = require('./config/db');
 const indexRoutes = require('./routes/indexRoutes');
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const incidentRoutes = require('./routes/incidentRoutes');
 const { setCurrentUser } = require('./middleware/authMiddleware');
 
 const app = express();
@@ -39,6 +40,7 @@ app.use(setCurrentUser);
 // ruter
 app.use('/', authRoutes);
 app.use('/admin', adminRoutes);
+app.use('/incidents', incidentRoutes);
 app.use('/', indexRoutes);
 
 // 404

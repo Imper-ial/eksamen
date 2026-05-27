@@ -1,4 +1,4 @@
-// middleware for 
+// middleware for auth
 const User = require('../models/User');
 
 // gjør innlogget bruker tilgjengelig i alle views via res.locals.currentUser

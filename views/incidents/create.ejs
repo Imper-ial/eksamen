@@ -1,0 +1,57 @@
+<%- include('../partials/header') %>
+
+<section class="auth">
+  <h2>Ny hendelse</h2>
+
+  <% if (error) { %>
+    <div class="error-banner"><%= error %></div>
+  <% } %>
+
+  <form method="POST" action="/incidents" class="form">
+    <div class="form-row">
+      <label for="title">Tittel</label>
+      <input type="text" id="title" name="title" value="<%= form.title %>" required autofocus>
+    </div>
+
+    <div class="form-row">
+      <label for="description">Beskrivelse</label>
+      <textarea id="description" name="description" rows="4" required><%= form.description %></textarea>
+    </div>
+
+    <div class="form-row">
+      <label for="category">Kategori</label>
+      <select id="category" name="category" required>
+        <option value="">-- velg kategori --</option>
+        <% categories.forEach(c => { %>
+          <option value="<%= c %>" <%= form.category === c ? 'selected' : '' %>><%= c %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="priority">Kritikalitet</label>
+      <select id="priority" name="priority" required>
+        <% priorities.forEach(p => { %>
+          <option value="<%= p %>" <%= form.priority === p ? 'selected' : '' %>><%= p %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="assignedTo">Ansvarlig person</label>
+      <select id="assignedTo" name="assignedTo" required>
+        <option value="">-- velg bruker --</option>
+        <% users.forEach(u => { %>
+          <option value="<%= u._id %>" <%= form.assignedTo == u._id ? 'selected' : '' %>>
+            <%= u.username %> (<%= u.role %>)
+          </option>
+        <% }) %>
+      </select>
+    </div>
+
+    <button type="submit" class="btn">Registrer</button>
+    <a href="/incidents" class="cancel">Avbryt</a>
+  </form>
+</section>
+
+<%- include('../partials/footer') %>

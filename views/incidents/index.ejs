@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+
+<section class="hero">
+  <div class="section-head">
+    <h2>Hendelser</h2>
+    <a href="/incidents/new" class="btn">+ Ny hendelse</a>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Tittel</th>
+        <th>Kategori</th>
+        <th>Kritikalitet</th>
+        <th>Status</th>
+        <th>Ansvarlig</th>
+        <th>Opprettet av</th>
+        <th>Dato</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% incidents.forEach(i => {
+        const priorityMap = { 'Lav': 'low', 'Middels': 'medium', 'Høy': 'high', 'Kritisk': 'critical' };
+        const statusMap   = { 'Åpen': 'open', 'Under arbeid': 'progress', 'Løst': 'resolved' };
+      %>
+        <tr>
+          <td><%= i.title %></td>
+          <td><%= i.category %></td>
+          <td><span class="badge priority-<%= priorityMap[i.priority] %>"><%= i.priority %></span></td>
+          <td><span class="badge status-<%= statusMap[i.status] %>"><%= i.status %></span></td>
+          <td><%= i.assignedTo ? i.assignedTo.username : '—' %></td>
+          <td><%= i.createdBy ? i.createdBy.username : '—' %></td>
+          <td><%= i.createdAt.toLocaleDateString('no-NO') %></td>
+          <td><a href="/incidents/<%= i._id %>">Åpne</a></td>
+        </tr>
+      <% }) %>
+      <% if (incidents.length === 0) { %>
+        <tr><td colspan="8" class="muted">Ingen hendelser ennå.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</section>
+
+<%- include('../partials/footer') %>

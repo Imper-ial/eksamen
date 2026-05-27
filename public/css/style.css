@@ -209,3 +209,46 @@ body {
 .cancel:hover {
   text-decoration: underline;
 }
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #fff;
+  background: #6b7785;
+}
+
+.priority-low      { background: #4a8a3f; }
+.priority-medium   { background: #c98b1b; }
+.priority-high     { background: #d35400; }
+.priority-critical { background: #a12727; }
+
+.status-open       { background: #1f6feb; }
+.status-progress   { background: #c98b1b; }
+.status-resolved   { background: #4a8a3f; }
+
+.details {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 0.4rem 1rem;
+  margin: 1rem 0;
+}
+
+.details dt {
+  font-weight: bold;
+  color: #4a5562;
+}
+
+.details dd {
+  margin: 0;
+}
+
+.description {
+  white-space: pre-wrap;
+  background: #f7f9fc;
+  border: 1px solid #e1e5ea;
+  border-radius: 6px;
+  padding: 0.8rem;
+}

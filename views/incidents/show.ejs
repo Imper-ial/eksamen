@@ -1,0 +1,53 @@
+<%- include('../partials/header') %>
+
+<%
+  const priorityMap = { 'Lav': 'low', 'Middels': 'medium', 'Høy': 'high', 'Kritisk': 'critical' };
+  const statusMap   = { 'Åpen': 'open', 'Under arbeid': 'progress', 'Løst': 'resolved' };
+%>
+
+<section class="hero">
+  <div class="section-head">
+    <h2><%= incident.title %></h2>
+    <a href="/incidents" class="cancel">&larr; Tilbake</a>
+  </div>
+
+  <dl class="details">
+    <dt>Kategori</dt>
+    <dd><%= incident.category %></dd>
+
+    <dt>Kritikalitet</dt>
+    <dd><span class="badge priority-<%= priorityMap[incident.priority] %>"><%= incident.priority %></span></dd>
+
+    <dt>Status</dt>
+    <dd><span class="badge status-<%= statusMap[incident.status] %>"><%= incident.status %></span></dd>
+
+    <dt>Ansvarlig</dt>
+    <dd>
+      <% if (incident.assignedTo) { %>
+        <%= incident.assignedTo.username %> (<%= incident.assignedTo.role %>)
+      <% } else { %>
+        —
+      <% } %>
+    </dd>
+
+    <dt>Opprettet av</dt>
+    <dd>
+      <% if (incident.createdBy) { %>
+        <%= incident.createdBy.username %> (<%= incident.createdBy.role %>)
+      <% } else { %>
+        —
+      <% } %>
+    </dd>
+
+    <dt>Opprettet</dt>
+    <dd><%= incident.createdAt.toLocaleString('no-NO') %></dd>
+
+    <dt>Sist oppdatert</dt>
+    <dd><%= incident.updatedAt.toLocaleString('no-NO') %></dd>
+  </dl>
+
+  <h3>Beskrivelse</h3>
+  <p class="description"><%= incident.description %></p>
+</section>
+
+<%- include('../partials/footer') %>
