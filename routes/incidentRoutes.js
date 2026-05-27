@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const incidentController = require('../controllers/incidentController');
+const actionLogController = require('../controllers/actionLogController');
 const { requireAuth } = require('../middleware/authMiddleware');
 
 // alle hendelses-ruter krever innlogging
@@ -11,5 +12,6 @@ router.get('/new', incidentController.showCreate);
 router.post('/', incidentController.create);
 router.get('/:id', incidentController.show);
 router.post('/:id/update', incidentController.update);
+router.post('/:id/logs', actionLogController.create);
 
 module.exports = router;

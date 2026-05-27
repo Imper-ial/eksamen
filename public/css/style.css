@@ -277,3 +277,27 @@ body {
   padding: 0.4rem 0.9rem;
   font-size: 0.95rem;
 }
+
+.log-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.log-item {
+  background: #f7f9fc;
+  border: 1px solid #e1e5ea;
+  border-left: 4px solid #1f3a5f;
+  border-radius: 4px;
+  padding: 0.7rem 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.log-meta {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.log-message {
+  white-space: pre-wrap;
+}

@@ -88,4 +88,34 @@
   </form>
 </section>
 
+<section class="hero">
+  <h3>Tiltakslogg</h3>
+
+  <form method="POST" action="/incidents/<%= incident._id %>/logs" class="form">
+    <div class="form-row">
+      <label for="message">Nytt tiltak</label>
+      <textarea id="message" name="message" rows="3" required
+        placeholder="F.eks. Restartet tjenesten, Kontaktet ansvarlig avdeling"></textarea>
+    </div>
+    <button type="submit" class="btn">Legg til tiltak</button>
+  </form>
+
+  <% if (logs.length === 0) { %>
+    <p class="muted">Ingen tiltak registrert ennå.</p>
+  <% } else { %>
+    <ul class="log-list">
+      <% logs.forEach(l => { %>
+        <li class="log-item">
+          <div class="log-meta">
+            <strong><%= l.user ? l.user.username : 'Ukjent' %></strong>
+            <% if (l.user) { %>(<%= l.user.role %>)<% } %>
+            <span class="muted">— <%= l.createdAt.toLocaleString('no-NO') %></span>
+          </div>
+          <div class="log-message"><%= l.message %></div>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+</section>
+
 <%- include('../partials/footer') %>

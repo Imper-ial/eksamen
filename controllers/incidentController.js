@@ -1,5 +1,6 @@
 const Incident = require('../models/Incident');
 const User = require('../models/User');
+const ActionLog = require('../models/ActionLog');
 
 const CATEGORIES = ['Vannlekkasje', 'Brannfare', 'IT-feil', 'Strøm', 'Annet'];
 const PRIORITIES = ['Lav', 'Middels', 'Høy', 'Kritisk'];
@@ -148,10 +149,16 @@ exports.show = async (req, res) => {
     // hent brukere til ansvarlig-dropdown
     const users = await User.find().select('username role').sort({ username: 1 });
 
+    // hent tiltaksloggen for hendelsen, nyeste først
+    const logs = await ActionLog.find({ incident: incident._id })
+      .populate('user', 'username role')
+      .sort({ createdAt: -1 });
+
     res.render('incidents/show', {
       title: incident.title,
       incident,
       users,
+      logs,
       statuses: STATUSES,
       priorities: PRIORITIES,
       error: null
