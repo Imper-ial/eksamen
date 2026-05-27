@@ -7,6 +7,7 @@ const session = require('express-session');
 const connectDB = require('./config/db');
 const indexRoutes = require('./routes/indexRoutes');
 const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const { setCurrentUser } = require('./middleware/authMiddleware');
 
 const app = express();
@@ -37,6 +38,7 @@ app.use(setCurrentUser);
 
 // ruter
 app.use('/', authRoutes);
+app.use('/admin', adminRoutes);
 app.use('/', indexRoutes);
 
 // 404

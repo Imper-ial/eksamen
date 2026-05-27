@@ -14,6 +14,9 @@
         <a href="/">Forside</a>
         <% if (currentUser) { %>
           <a href="/dashboard">Dashboard</a>
+          <% if (currentUser.role === 'admin') { %>
+            <a href="/admin/users">Admin</a>
+          <% } %>
           <span class="user-info"><%= currentUser.username %> (<%= currentUser.role %>)</span>
           <form method="POST" action="/logout" class="logout-form">
             <button type="submit" class="link-button">Logg ut</button>

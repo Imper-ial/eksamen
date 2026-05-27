@@ -17,7 +17,7 @@ exports.setCurrentUser = async (req, res, next) => {
   next();
 };
 
-// krever at bruker er logget inn
+// krever at bruker er innlogget
 exports.requireAuth = (req, res, next) => {
   if (!req.session || !req.session.userId) {
     return res.redirect('/login');

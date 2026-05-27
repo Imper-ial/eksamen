@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+
+<section class="hero">
+  <div class="section-head">
+    <h2>Brukere</h2>
+    <a href="/admin/users/new" class="btn">+ Opprett ny bruker</a>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Brukernavn</th>
+        <th>Rolle</th>
+        <th>Opprettet</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(u => { %>
+        <tr>
+          <td><%= u.username %></td>
+          <td><%= u.role %></td>
+          <td><%= u.createdAt.toLocaleDateString('no-NO') %></td>
+        </tr>
+      <% }) %>
+      <% if (users.length === 0) { %>
+        <tr><td colspan="3" class="muted">Ingen brukere ennå.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</section>
+
+<%- include('../partials/footer') %>

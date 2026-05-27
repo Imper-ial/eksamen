@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+
+<section class="auth">
+  <h2>Opprett bruker</h2>
+
+  <% if (error) { %>
+    <div class="error-banner"><%= error %></div>
+  <% } %>
+
+  <form method="POST" action="/admin/users" class="form">
+    <div class="form-row">
+      <label for="username">Brukernavn</label>
+      <input type="text" id="username" name="username" value="<%= username %>" required autofocus>
+    </div>
+    <div class="form-row">
+      <label for="password">Passord</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div class="form-row">
+      <label for="role">Rolle</label>
+      <select id="role" name="role" required>
+        <option value="">-- velg rolle --</option>
+        <option value="admin" <%= role === 'admin' ? 'selected' : '' %>>admin</option>
+        <option value="it"    <%= role === 'it'    ? 'selected' : '' %>>it</option>
+        <option value="drift" <%= role === 'drift' ? 'selected' : '' %>>drift</option>
+      </select>
+    </div>
+    <button type="submit" class="btn">Opprett</button>
+    <a href="/admin/users" class="cancel">Avbryt</a>
+  </form>
+</section>
+
+<%- include('../partials/footer') %>
