@@ -15,10 +15,11 @@
         <% if (currentUser) { %>
           <a href="/dashboard">Dashboard</a>
           <a href="/incidents">Hendelser</a>
+          <a href="/faq">FAQ</a>
           <% if (currentUser.role === 'admin') { %>
-            <a href="/admin/users">Admin</a>
+            <a href="/admin/users">Administrasjon</a>
           <% } %>
-          <span class="user-info"><%= currentUser.username %> (<%= currentUser.role %>)</span>
+          <span class="user-info"><%= currentUser.name %> (<%= roleLabel(currentUser.role) %>)</span>
           <form method="POST" action="/logout" class="logout-form">
             <button type="submit" class="link-button">Logg ut</button>
           </form>

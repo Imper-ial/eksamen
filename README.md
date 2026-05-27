@@ -13,16 +13,19 @@ andre avvik.
 - express-session
 - argon2 (passord-hashing)
 - dotenv
-- Vanlig CSS
 
 ## Prosjektstruktur
 
 ```
 /config        - databaseoppsett
+/controllers   - kontroller-logikk (MVC)
+/middleware    - auth-middleware
+/models        - Mongoose-modeller
 /public/css    - stilark
 /routes        - Express-ruter
 /views         - EJS-maler
-app.js         - hovedfil som starter serveren
+app.js         - hovedfil
+seed.js        - script for testdata
 ```
 
 ## Komme i gang
@@ -32,23 +35,42 @@ app.js         - hovedfil som starter serveren
    npm install
    ```
 
-2. Kopier eksempelmiljøfilen og fyll inn dine egne verdier:
+2. Lag en `.env`-fil basert på `.env.example`:
    ```
    cp .env.example .env
    ```
 
-3. Start serveren:
+3. Kjør seed-scriptet for å lage testbrukere og eksempelhendelser:
+   ```
+   npm run seed
+   ```
+
+4. Start serveren:
    ```
    npm start
    ```
 
 Serveren kjører som standard på `http://localhost:3000`.
 
-## Miljøvariabler
+## Personvern / GDPR
 
-Se `.env.example` for hvilke variabler som må være satt.
+Systemet lagrer kun nødvendige personopplysninger for intern oppfølging av
+hendelser. Det lagres fullt navn og rolle for å kunne vise hvem som har
+opprettet, fått ansvar for eller fulgt opp en hendelse. Systemet skal ikke
+lagre fødselsnummer, private adresser, telefonnummer eller helseopplysninger.
+Brukere får beskjed i FAQ om å ikke skrive sensitive personopplysninger
+unødvendig.
 
-## Status
+## Roller
 
-Iterasjon 1: grunnstruktur og forside.
-Innlogging, modeller og hendelser kommer i senere iterasjoner.
+- **admin** – kan opprette brukere og se/redigere alle hendelser.
+- **it** – kan se og følge opp hendelser.
+- **drift** – kan se og følge opp hendelser.
+
+## Testbrukere (etter seed)
+
+- `Christian Bjørndal` / `Admin123!` (admin)
+- `Marius Haugen` / `It123!` (it)
+- `Anders Johansen` / `Drift123!` (drift)
+
+Se `seed.js` for full liste over 27 brukere.

@@ -9,8 +9,9 @@
 
   <form method="POST" action="/admin/users" class="form">
     <div class="form-row">
-      <label for="username">Brukernavn</label>
-      <input type="text" id="username" name="username" value="<%= username %>" required autofocus>
+      <label for="name">Fullt navn</label>
+      <input type="text" id="name" name="name" value="<%= name %>" required autofocus
+        placeholder="F.eks. Christian Bjørndal">
     </div>
     <div class="form-row">
       <label for="password">Passord</label>
@@ -20,9 +21,9 @@
       <label for="role">Rolle</label>
       <select id="role" name="role" required>
         <option value="">-- velg rolle --</option>
-        <option value="admin" <%= role === 'admin' ? 'selected' : '' %>>admin</option>
-        <option value="it"    <%= role === 'it'    ? 'selected' : '' %>>it</option>
-        <option value="drift" <%= role === 'drift' ? 'selected' : '' %>>drift</option>
+        <option value="admin" <%= role === 'admin' ? 'selected' : '' %>>Administrasjon</option>
+        <option value="it"    <%= role === 'it'    ? 'selected' : '' %>>IT</option>
+        <option value="drift" <%= role === 'drift' ? 'selected' : '' %>>Drift</option>
       </select>
     </div>
     <button type="submit" class="btn">Opprett</button>

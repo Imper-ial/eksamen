@@ -1,15 +1,22 @@
 <%- include('../partials/header') %>
 
 <section class="hero">
-  <div class="section-head">
-    <h2>Brukere</h2>
+  <h2>Administrasjon</h2>
+  <div class="admin-actions">
     <a href="/admin/users/new" class="btn">+ Opprett ny bruker</a>
+    <a href="/incidents/new" class="btn">+ Opprett ny hendelse</a>
+  </div>
+</section>
+
+<section class="hero">
+  <div class="section-head">
+    <h3>Brukere</h3>
   </div>
 
   <table class="table">
     <thead>
       <tr>
-        <th>Brukernavn</th>
+        <th>Fullt navn</th>
         <th>Rolle</th>
         <th>Opprettet</th>
       </tr>
@@ -17,8 +24,8 @@
     <tbody>
       <% users.forEach(u => { %>
         <tr>
-          <td><%= u.username %></td>
-          <td><%= u.role %></td>
+          <td><%= u.name %></td>
+          <td><%= roleLabel(u.role) %></td>
           <td><%= u.createdAt.toLocaleDateString('no-NO') %></td>
         </tr>
       <% }) %>

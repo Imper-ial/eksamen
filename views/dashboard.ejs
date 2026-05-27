@@ -3,8 +3,8 @@
 <section class="hero">
   <h2>Dashboard</h2>
   <p>
-    Hei <strong><%= currentUser.username %></strong>!
-    Du er logget inn som <strong><%= currentUser.role %></strong>.
+    Hei <strong><%= currentUser.name %></strong>!
+    Du er logget inn som <strong><%= roleLabel(currentUser.role) %></strong>.
   </p>
   <p><a href="/incidents" class="btn">Gå til hendelser</a></p>
 </section>

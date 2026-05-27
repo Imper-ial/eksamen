@@ -7,3 +7,8 @@ exports.showHome = (req, res) => {
 exports.showDashboard = (req, res) => {
   res.render('dashboard', { title: 'Dashboard' });
 };
+
+// controller for FAQ (beskyttet side)
+exports.showFaq = (req, res) => {
+  res.render('faq', { title: 'FAQ' });
+};

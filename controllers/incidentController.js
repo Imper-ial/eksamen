@@ -18,8 +18,8 @@ exports.list = async (req, res) => {
     if (category && CATEGORIES.includes(category)) filter.category = category;
 
     const incidents = await Incident.find(filter)
-      .populate('assignedTo', 'username role')
-      .populate('createdBy', 'username role')
+      .populate('assignedTo', 'name role')
+      .populate('createdBy', 'name role')
       .sort({ createdAt: -1 });
 
     res.render('incidents/index', {
@@ -46,7 +46,7 @@ exports.list = async (req, res) => {
 // vis skjema for ny hendelse
 exports.showCreate = async (req, res) => {
   try {
-    const users = await User.find().select('username role').sort({ username: 1 });
+    const users = await User.find().select('name role').sort({ name: 1 });
     res.render('incidents/create', {
       title: 'Ny hendelse',
       error: null,
@@ -76,7 +76,7 @@ exports.create = async (req, res) => {
 
   // valider at alle felt er fylt ut
   if (!title || !description || !category || !priority || !assignedTo) {
-    const users = await User.find().select('username role').sort({ username: 1 });
+    const users = await User.find().select('name role').sort({ name: 1 });
     return res.status(400).render('incidents/create', {
       title: 'Ny hendelse',
       error: 'Alle felt må fylles ut.',
@@ -95,7 +95,7 @@ exports.create = async (req, res) => {
 
   // valider kategori og kritikalitet
   if (!CATEGORIES.includes(category) || !PRIORITIES.includes(priority)) {
-    const users = await User.find().select('username role').sort({ username: 1 });
+    const users = await User.find().select('name role').sort({ name: 1 });
     return res.status(400).render('incidents/create', {
       title: 'Ny hendelse',
       error: 'Ugyldig kategori eller kritikalitet.',
@@ -120,7 +120,7 @@ exports.create = async (req, res) => {
     res.redirect('/incidents');
   } catch (err) {
     console.error('Feil ved oppretting av hendelse:', err.message);
-    const users = await User.find().select('username role').sort({ username: 1 });
+    const users = await User.find().select('name role').sort({ name: 1 });
     res.status(500).render('incidents/create', {
       title: 'Ny hendelse',
       error: 'Noe gikk galt. Prøv igjen.',
@@ -136,8 +136,8 @@ exports.create = async (req, res) => {
 exports.show = async (req, res) => {
   try {
     const incident = await Incident.findById(req.params.id)
-      .populate('assignedTo', 'username role')
-      .populate('createdBy', 'username role');
+      .populate('assignedTo', 'name role')
+      .populate('createdBy', 'name role');
 
     if (!incident) {
       return res.status(404).render('error', {
@@ -147,11 +147,11 @@ exports.show = async (req, res) => {
     }
 
     // hent brukere til ansvarlig-dropdown
-    const users = await User.find().select('username role').sort({ username: 1 });
+    const users = await User.find().select('name role').sort({ name: 1 });
 
     // hent tiltaksloggen for hendelsen, nyeste først
     const logs = await ActionLog.find({ incident: incident._id })
-      .populate('user', 'username role')
+      .populate('user', 'name role')
       .sort({ createdAt: -1 });
 
     res.render('incidents/show', {

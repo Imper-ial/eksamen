@@ -9,32 +9,32 @@ exports.showLogin = (req, res) => {
   res.render('auth/login', {
     title: 'Logg inn',
     error: null,
-    username: ''
+    name: ''
   });
 };
 
 // behandle innsendt login-skjema
 exports.login = async (req, res) => {
-  const { username, password } = req.body;
+  const { name, password } = req.body;
 
-  //validering
-  if (!username || !password) {
+  // validering
+  if (!name || !password) {
     return res.status(400).render('auth/login', {
       title: 'Logg inn',
-      error: 'Brukernavn og passord må fylles ut.',
-      username: username || ''
+      error: 'Fullt navn og passord må fylles ut.',
+      name: name || ''
     });
   }
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ name });
 
     // bruker finnes ikke
     if (!user) {
       return res.status(401).render('auth/login', {
         title: 'Logg inn',
-        error: 'Feil brukernavn eller passord.',
-        username
+        error: 'Feil navn eller passord.',
+        name
       });
     }
 
@@ -43,8 +43,8 @@ exports.login = async (req, res) => {
     if (!ok) {
       return res.status(401).render('auth/login', {
         title: 'Logg inn',
-        error: 'Feil brukernavn eller passord.',
-        username
+        error: 'Feil navn eller passord.',
+        name
       });
     }
 
@@ -56,7 +56,7 @@ exports.login = async (req, res) => {
     res.status(500).render('auth/login', {
       title: 'Logg inn',
       error: 'Noe gikk galt. Prøv igjen.',
-      username: username || ''
+      name: name || ''
     });
   }
 };

@@ -301,3 +301,30 @@ body {
 .log-message {
   white-space: pre-wrap;
 }
+
+.faq-item {
+  border-top: 1px solid #e1e5ea;
+  padding: 1rem 0;
+}
+
+.faq-item:first-of-type {
+  border-top: none;
+}
+
+.faq-item h3 {
+  margin: 0 0 0.4rem;
+  color: #1f3a5f;
+  font-size: 1.05rem;
+}
+
+.faq-item p,
+.faq-item ul {
+  margin: 0.3rem 0;
+}
+
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}

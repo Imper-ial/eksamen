@@ -4,9 +4,16 @@ const User = require('../models/User');
 // gjør innlogget bruker tilgjengelig i alle views via res.locals.currentUser
 exports.setCurrentUser = async (req, res, next) => {
   res.locals.currentUser = null;
+
+  // hjelpe-funksjon som gjør om rollenavn til pene visningsnavn
+  res.locals.roleLabel = (role) => {
+    const map = { admin: 'Administrasjon', it: 'IT', drift: 'Drift' };
+    return map[role] || role;
+  };
+
   if (req.session && req.session.userId) {
     try {
-      const user = await User.findById(req.session.userId).select('username role');
+      const user = await User.findById(req.session.userId).select('name role');
       if (user) {
         res.locals.currentUser = user;
       }

@@ -43,7 +43,7 @@
         <option value="">-- velg bruker --</option>
         <% users.forEach(u => { %>
           <option value="<%= u._id %>" <%= form.assignedTo == u._id ? 'selected' : '' %>>
-            <%= u.username %> (<%= u.role %>)
+            <%= u.name %> (<%= roleLabel(u.role) %>)
           </option>
         <% }) %>
       </select>

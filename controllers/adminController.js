@@ -6,7 +6,7 @@ const ALLOWED_ROLES = ['admin', 'it', 'drift'];
 // vis liste over brukere
 exports.listUsers = async (req, res) => {
   try {
-    const users = await User.find().sort({ username: 1 });
+    const users = await User.find().sort({ name: 1 });
     res.render('admin/users', {
       title: 'Brukere',
       users
@@ -25,21 +25,21 @@ exports.showCreateUser = (req, res) => {
   res.render('admin/create-user', {
     title: 'Opprett bruker',
     error: null,
-    username: '',
+    name: '',
     role: ''
   });
 };
 
 // opprett ny bruker
 exports.createUser = async (req, res) => {
-  const { username, password, role } = req.body;
+  const { name, password, role } = req.body;
 
   // validering
-  if (!username || !password || !role) {
+  if (!name || !password || !role) {
     return res.status(400).render('admin/create-user', {
       title: 'Opprett bruker',
       error: 'Alle felt må fylles ut.',
-      username: username || '',
+      name: name || '',
       role: role || ''
     });
   }
@@ -48,31 +48,31 @@ exports.createUser = async (req, res) => {
     return res.status(400).render('admin/create-user', {
       title: 'Opprett bruker',
       error: 'Ugyldig rolle.',
-      username,
+      name,
       role: ''
     });
   }
 
   try {
-    const existing = await User.findOne({ username });
+    const existing = await User.findOne({ name });
     if (existing) {
       return res.status(400).render('admin/create-user', {
         title: 'Opprett bruker',
-        error: 'Brukernavnet finnes allerede.',
-        username,
+        error: 'Navnet finnes allerede.',
+        name,
         role
       });
     }
 
     const passwordHash = await argon2.hash(password);
-    await User.create({ username, passwordHash, role });
+    await User.create({ name, passwordHash, role });
     res.redirect('/admin/users');
   } catch (err) {
     console.error('Feil ved opprettelse av bruker:', err.message);
     res.status(500).render('admin/create-user', {
       title: 'Opprett bruker',
       error: 'Noe gikk galt. Prøv igjen.',
-      username: username || '',
+      name: name || '',
       role: role || ''
     });
   }

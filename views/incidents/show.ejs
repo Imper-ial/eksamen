@@ -24,7 +24,7 @@
     <dt>Ansvarlig</dt>
     <dd>
       <% if (incident.assignedTo) { %>
-        <%= incident.assignedTo.username %> (<%= incident.assignedTo.role %>)
+        <%= incident.assignedTo.name %> (<%= roleLabel(incident.assignedTo.role) %>)
       <% } else { %>
         —
       <% } %>
@@ -33,7 +33,7 @@
     <dt>Opprettet av</dt>
     <dd>
       <% if (incident.createdBy) { %>
-        <%= incident.createdBy.username %> (<%= incident.createdBy.role %>)
+        <%= incident.createdBy.name %> (<%= roleLabel(incident.createdBy.role) %>)
       <% } else { %>
         —
       <% } %>
@@ -78,7 +78,7 @@
         <% users.forEach(u => { %>
           <option value="<%= u._id %>"
             <%= incident.assignedTo && incident.assignedTo._id.toString() === u._id.toString() ? 'selected' : '' %>>
-            <%= u.username %> (<%= u.role %>)
+            <%= u.name %> (<%= roleLabel(u.role) %>)
           </option>
         <% }) %>
       </select>
@@ -107,8 +107,8 @@
       <% logs.forEach(l => { %>
         <li class="log-item">
           <div class="log-meta">
-            <strong><%= l.user ? l.user.username : 'Ukjent' %></strong>
-            <% if (l.user) { %>(<%= l.user.role %>)<% } %>
+            <strong><%= l.user ? l.user.name : 'Ukjent' %></strong>
+            <% if (l.user) { %>(<%= roleLabel(l.user.role) %>)<% } %>
             <span class="muted">— <%= l.createdAt.toLocaleString('no-NO') %></span>
           </div>
           <div class="log-message"><%= l.message %></div>

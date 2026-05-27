@@ -5,5 +5,6 @@ const { requireAuth } = require('../middleware/authMiddleware');
 
 router.get('/', indexController.showHome);
 router.get('/dashboard', requireAuth, indexController.showDashboard);
+router.get('/faq', requireAuth, indexController.showFaq);
 
 module.exports = router;
