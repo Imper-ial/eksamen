@@ -12,6 +12,15 @@
       <h1 class="brand">Kommune 69 Varslingssystem</h1>
       <nav class="nav">
         <a href="/">Forside</a>
+        <% if (currentUser) { %>
+          <a href="/dashboard">Dashboard</a>
+          <span class="user-info"><%= currentUser.username %> (<%= currentUser.role %>)</span>
+          <form method="POST" action="/logout" class="logout-form">
+            <button type="submit" class="link-button">Logg ut</button>
+          </form>
+        <% } else { %>
+          <a href="/login">Logg inn</a>
+        <% } %>
       </nav>
     </div>
   </header>

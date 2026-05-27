@@ -6,6 +6,8 @@ const session = require('express-session');
 
 const connectDB = require('./config/db');
 const indexRoutes = require('./routes/indexRoutes');
+const authRoutes = require('./routes/authRoutes');
+const { setCurrentUser } = require('./middleware/authMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,7 +32,11 @@ app.use(session({
   saveUninitialized: false
 }));
 
+// gjør innlogget bruker tilgjengelig i alle views
+app.use(setCurrentUser);
+
 // ruter
+app.use('/', authRoutes);
 app.use('/', indexRoutes);
 
 // 404

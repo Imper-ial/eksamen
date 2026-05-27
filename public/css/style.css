@@ -34,13 +34,38 @@ body {
   font-size: 1.25rem;
 }
 
+.nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 .nav a {
   color: #fff;
   text-decoration: none;
-  margin-left: 1rem;
 }
 
 .nav a:hover {
+  text-decoration: underline;
+}
+
+.user-info {
+  color: #cdd7e3;
+  font-size: 0.9rem;
+}
+
+.logout-form {
+  margin: 0;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
   text-decoration: underline;
 }
 
@@ -81,4 +106,64 @@ body {
   text-align: center;
   color: #6b7785;
   font-size: 0.9rem;
+}
+
+.auth {
+  max-width: 400px;
+  margin: 2rem auto;
+  background: #fff;
+  border: 1px solid #e1e5ea;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.auth h2 {
+  margin-top: 0;
+  color: #1f3a5f;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-row label {
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  padding: 0.5rem;
+  border: 1px solid #c4ccd4;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.btn {
+  background: #1f3a5f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #2c4f7d;
+}
+
+.error-banner {
+  background: #fde2e2;
+  color: #a12727;
+  border: 1px solid #e6b3b3;
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
 }

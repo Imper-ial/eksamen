@@ -1,0 +1,12 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+  <h2>Dashboard</h2>
+  <p>
+    Hei <strong><%= currentUser.username %></strong>!
+    Du er logget inn som <strong><%= currentUser.role %></strong>.
+  </p>
+  <p class="muted">Hendelser kommer i neste iterasjon.</p>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,23 @@
+<%- include('../partials/header') %>
+
+<section class="auth">
+  <h2>Logg inn</h2>
+
+  <% if (error) { %>
+    <div class="error-banner"><%= error %></div>
+  <% } %>
+
+  <form method="POST" action="/login" class="form">
+    <div class="form-row">
+      <label for="username">Brukernavn</label>
+      <input type="text" id="username" name="username" value="<%= username %>" required autofocus>
+    </div>
+    <div class="form-row">
+      <label for="password">Passord</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn">Logg inn</button>
+  </form>
+</section>
+
+<%- include('../partials/footer') %>
