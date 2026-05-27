@@ -6,6 +6,32 @@
     <a href="/incidents/new" class="btn">+ Ny hendelse</a>
   </div>
 
+  <form method="GET" action="/incidents" class="filter-bar">
+    <select name="status">
+      <option value="">Alle statuser</option>
+      <% statuses.forEach(s => { %>
+        <option value="<%= s %>" <%= filters.status === s ? 'selected' : '' %>><%= s %></option>
+      <% }) %>
+    </select>
+
+    <select name="priority">
+      <option value="">All kritikalitet</option>
+      <% priorities.forEach(p => { %>
+        <option value="<%= p %>" <%= filters.priority === p ? 'selected' : '' %>><%= p %></option>
+      <% }) %>
+    </select>
+
+    <select name="category">
+      <option value="">Alle kategorier</option>
+      <% categories.forEach(c => { %>
+        <option value="<%= c %>" <%= filters.category === c ? 'selected' : '' %>><%= c %></option>
+      <% }) %>
+    </select>
+
+    <button type="submit" class="btn">Filtrer</button>
+    <a href="/incidents" class="cancel">Nullstill</a>
+  </form>
+
   <table class="table">
     <thead>
       <tr>

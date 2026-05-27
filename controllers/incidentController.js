@@ -3,18 +3,35 @@ const User = require('../models/User');
 
 const CATEGORIES = ['Vannlekkasje', 'Brannfare', 'IT-feil', 'Strøm', 'Annet'];
 const PRIORITIES = ['Lav', 'Middels', 'Høy', 'Kritisk'];
+const STATUSES = ['Åpen', 'Under arbeid', 'Løst'];
 
-// liste over alle hendelser
+// liste over hendelser med valgfri filtrering via query params
 exports.list = async (req, res) => {
   try {
-    const incidents = await Incident.find()
+    const { status, priority, category } = req.query;
+
+    // bygg filter ut fra valgte query params
+    const filter = {};
+    if (status   && STATUSES.includes(status))     filter.status = status;
+    if (priority && PRIORITIES.includes(priority)) filter.priority = priority;
+    if (category && CATEGORIES.includes(category)) filter.category = category;
+
+    const incidents = await Incident.find(filter)
       .populate('assignedTo', 'username role')
       .populate('createdBy', 'username role')
       .sort({ createdAt: -1 });
 
     res.render('incidents/index', {
       title: 'Hendelser',
-      incidents
+      incidents,
+      statuses: STATUSES,
+      priorities: PRIORITIES,
+      categories: CATEGORIES,
+      filters: {
+        status: status || '',
+        priority: priority || '',
+        category: category || ''
+      }
     });
   } catch (err) {
     console.error('Feil ved henting av hendelser:', err.message);
@@ -128,15 +145,61 @@ exports.show = async (req, res) => {
       });
     }
 
+    // hent brukere til ansvarlig-dropdown
+    const users = await User.find().select('username role').sort({ username: 1 });
+
     res.render('incidents/show', {
       title: incident.title,
-      incident
+      incident,
+      users,
+      statuses: STATUSES,
+      priorities: PRIORITIES,
+      error: null
     });
   } catch (err) {
     console.error('Feil ved henting av hendelse:', err.message);
     res.status(500).render('error', {
       title: 'Serverfeil',
       message: 'Klarte ikke å hente hendelsen.'
+    });
+  }
+};
+
+// oppdater status, kritikalitet og ansvarlig
+exports.update = async (req, res) => {
+  const { status, priority, assignedTo } = req.body;
+
+  // enkel validering
+  if (!STATUSES.includes(status) ||
+      !PRIORITIES.includes(priority) ||
+      !assignedTo) {
+    return res.status(400).render('error', {
+      title: 'Ugyldig data',
+      message: 'Status, kritikalitet og ansvarlig må være gyldige verdier.'
+    });
+  }
+
+  try {
+    const incident = await Incident.findById(req.params.id);
+    if (!incident) {
+      return res.status(404).render('error', {
+        title: 'Ikke funnet',
+        message: 'Hendelsen finnes ikke.'
+      });
+    }
+
+    incident.status = status;
+    incident.priority = priority;
+    incident.assignedTo = assignedTo;
+    // save() trigger timestamps slik at updatedAt blir oppdatert
+    await incident.save();
+
+    res.redirect(`/incidents/${incident._id}`);
+  } catch (err) {
+    console.error('Feil ved oppdatering av hendelse:', err.message);
+    res.status(500).render('error', {
+      title: 'Serverfeil',
+      message: 'Klarte ikke å oppdatere hendelsen.'
     });
   }
 };

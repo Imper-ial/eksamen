@@ -10,5 +10,6 @@ router.get('/', incidentController.list);
 router.get('/new', incidentController.showCreate);
 router.post('/', incidentController.create);
 router.get('/:id', incidentController.show);
+router.post('/:id/update', incidentController.update);
 
 module.exports = router;

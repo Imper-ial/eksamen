@@ -50,4 +50,42 @@
   <p class="description"><%= incident.description %></p>
 </section>
 
+<section class="hero">
+  <h3>Oppdater hendelse</h3>
+
+  <form method="POST" action="/incidents/<%= incident._id %>/update" class="form">
+    <div class="form-row">
+      <label for="status">Status</label>
+      <select id="status" name="status" required>
+        <% statuses.forEach(s => { %>
+          <option value="<%= s %>" <%= incident.status === s ? 'selected' : '' %>><%= s %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="priority">Kritikalitet</label>
+      <select id="priority" name="priority" required>
+        <% priorities.forEach(p => { %>
+          <option value="<%= p %>" <%= incident.priority === p ? 'selected' : '' %>><%= p %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="assignedTo">Ansvarlig person</label>
+      <select id="assignedTo" name="assignedTo" required>
+        <% users.forEach(u => { %>
+          <option value="<%= u._id %>"
+            <%= incident.assignedTo && incident.assignedTo._id.toString() === u._id.toString() ? 'selected' : '' %>>
+            <%= u.username %> (<%= u.role %>)
+          </option>
+        <% }) %>
+      </select>
+    </div>
+
+    <button type="submit" class="btn">Lagre endringer</button>
+  </form>
+</section>
+
 <%- include('../partials/footer') %>
